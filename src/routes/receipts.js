@@ -17,9 +17,9 @@ router.post('/', upload.single('image'), async (req, res) => {
     const receipt = await prisma.receipt.create({
   data: {
     merchantName: aiResult.merchant_name || 'Unknown',
-    receiptDate:  aiResult.receipt_date && aiResult.receipt_date !== 'Invalid Date'
-      ? new Date(aiResult.receipt_date)
-      : new Date(),
+    receiptDate: aiResult.receipt_date && aiResult.receipt_date !== 'Invalid Date'
+  ? new Date(aiResult.receipt_date)
+  : new Date(),
     totalAmount:  aiResult.total_amount || 0,
     imageUrl:     req.file.path,
     aiRawText:    JSON.stringify(aiResult),
