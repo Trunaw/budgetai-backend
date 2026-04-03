@@ -42,7 +42,13 @@ async function scanReceipt(imagePath) {
   });
 
   const text = response.content[0].text;
-  return JSON.parse(text.trim());
+
+// Extract JSON từ response — AI đôi khi wrap trong markdown
+const jsonMatch = text.match(/\{[\s\S]*\}/);
+if (!jsonMatch) {
+  throw new Error('AI không trả về JSON hợp lệ: ' + text);
+}
+return JSON.parse(jsonMatch[0]);
 }
 
 module.exports = { scanReceipt };
